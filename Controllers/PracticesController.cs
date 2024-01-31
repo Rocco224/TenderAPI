@@ -25,29 +25,45 @@ namespace TenderApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Practice>>> GetPractices()
         {
-          if (_context.Practices == null)
-          {
-              return NotFound();
-          }
-            return await _context.Practices.ToListAsync();
+            try
+            {
+                if (_context.Practices == null)
+                {
+                    return NotFound();
+                }
+                return await _context.Practices.ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET: api/Practices/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Practice>> GetPractice(int id)
         {
-          if (_context.Practices == null)
-          {
-              return NotFound();
-          }
-            var practice = await _context.Practices.FindAsync(id);
-
-            if (practice == null)
+            try
             {
-                return NotFound();
-            }
+                if (_context.Practices == null)
+                {
+                    return NotFound();
+                }
+                var practice = await _context.Practices.FindAsync(id);
 
-            return practice;
+                if (practice == null)
+                {
+                    return NotFound();
+                }
+
+                return practice;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // PUT: api/Practices/5
@@ -55,30 +71,38 @@ namespace TenderApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPractice(int id, Practice practice)
         {
-            if (id != practice.PracticeId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(practice).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PracticeExists(id))
+                if (id != practice.PracticeId)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(practice).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!PracticeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // POST: api/Practices
@@ -86,48 +110,64 @@ namespace TenderApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Practice>> PostPractice(Practice practice)
         {
-          if (_context.Practices == null)
-          {
-              return Problem("Entity set 'TenderDbContext.Practices'  is null.");
-          }
-            _context.Practices.Add(practice);
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (PracticeExists(practice.PracticeId))
+                if (_context.Practices == null)
                 {
-                    return Conflict();
+                    return Problem("Entity set 'TenderDbContext.Practices'  is null.");
                 }
-                else
+                _context.Practices.Add(practice);
+                try
                 {
-                    throw;
+                    await _context.SaveChangesAsync();
                 }
-            }
+                catch (DbUpdateException)
+                {
+                    if (PracticeExists(practice.PracticeId))
+                    {
+                        return Conflict();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
 
-            return CreatedAtAction("GetPractice", new { id = practice.PracticeId }, practice);
+                return CreatedAtAction("GetPractice", new { id = practice.PracticeId }, practice);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // DELETE: api/Practices/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePractice(int id)
         {
-            if (_context.Practices == null)
+            try
             {
-                return NotFound();
+                if (_context.Practices == null)
+                {
+                    return NotFound();
+                }
+                var practice = await _context.Practices.FindAsync(id);
+                if (practice == null)
+                {
+                    return NotFound();
+                }
+
+                _context.Practices.Remove(practice);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-            var practice = await _context.Practices.FindAsync(id);
-            if (practice == null)
+            catch (Exception)
             {
-                return NotFound();
+
+                throw;
             }
-
-            _context.Practices.Remove(practice);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool PracticeExists(int id)
