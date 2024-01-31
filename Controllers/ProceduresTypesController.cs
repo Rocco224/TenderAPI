@@ -25,29 +25,45 @@ namespace TenderApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProceduresType>>> GetProceduresTypes()
         {
-          if (_context.ProceduresTypes == null)
-          {
-              return NotFound();
-          }
-            return await _context.ProceduresTypes.ToListAsync();
+            try
+            {
+                if (_context.ProceduresTypes == null)
+                {
+                    return NotFound();
+                }
+                return await _context.ProceduresTypes.ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET: api/ProceduresTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ProceduresType>> GetProceduresType(int id)
         {
-          if (_context.ProceduresTypes == null)
-          {
-              return NotFound();
-          }
-            var proceduresType = await _context.ProceduresTypes.FindAsync(id);
-
-            if (proceduresType == null)
+            try
             {
-                return NotFound();
-            }
+                if (_context.ProceduresTypes == null)
+                {
+                    return NotFound();
+                }
+                var proceduresType = await _context.ProceduresTypes.FindAsync(id);
 
-            return proceduresType;
+                if (proceduresType == null)
+                {
+                    return NotFound();
+                }
+
+                return proceduresType;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // PUT: api/ProceduresTypes/5
@@ -55,30 +71,38 @@ namespace TenderApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProceduresType(int id, ProceduresType proceduresType)
         {
-            if (id != proceduresType.ProcedureTypeId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(proceduresType).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ProceduresTypeExists(id))
+                if (id != proceduresType.ProcedureTypeId)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(proceduresType).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProceduresTypeExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // POST: api/ProceduresTypes
@@ -86,34 +110,50 @@ namespace TenderApi.Controllers
         [HttpPost]
         public async Task<ActionResult<ProceduresType>> PostProceduresType(ProceduresType proceduresType)
         {
-          if (_context.ProceduresTypes == null)
-          {
-              return Problem("Entity set 'TenderDbContext.ProceduresTypes'  is null.");
-          }
-            _context.ProceduresTypes.Add(proceduresType);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (_context.ProceduresTypes == null)
+                {
+                    return Problem("Entity set 'TenderDbContext.ProceduresTypes'  is null.");
+                }
+                _context.ProceduresTypes.Add(proceduresType);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProceduresType", new { id = proceduresType.ProcedureTypeId }, proceduresType);
+                return CreatedAtAction("GetProceduresType", new { id = proceduresType.ProcedureTypeId }, proceduresType);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // DELETE: api/ProceduresTypes/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProceduresType(int id)
         {
-            if (_context.ProceduresTypes == null)
+            try
             {
-                return NotFound();
+                if (_context.ProceduresTypes == null)
+                {
+                    return NotFound();
+                }
+                var proceduresType = await _context.ProceduresTypes.FindAsync(id);
+                if (proceduresType == null)
+                {
+                    return NotFound();
+                }
+
+                _context.ProceduresTypes.Remove(proceduresType);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-            var proceduresType = await _context.ProceduresTypes.FindAsync(id);
-            if (proceduresType == null)
+            catch (Exception)
             {
-                return NotFound();
+
+                throw;
             }
-
-            _context.ProceduresTypes.Remove(proceduresType);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool ProceduresTypeExists(int id)

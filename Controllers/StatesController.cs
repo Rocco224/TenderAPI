@@ -25,29 +25,45 @@ namespace TenderApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<State>>> GetStates()
         {
-          if (_context.States == null)
-          {
-              return NotFound();
-          }
-            return await _context.States.ToListAsync();
+            try
+            {
+                if (_context.States == null)
+                {
+                    return NotFound();
+                }
+                return await _context.States.ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // GET: api/States/5
         [HttpGet("{id}")]
         public async Task<ActionResult<State>> GetState(int id)
         {
-          if (_context.States == null)
-          {
-              return NotFound();
-          }
-            var state = await _context.States.FindAsync(id);
-
-            if (state == null)
+            try
             {
-                return NotFound();
-            }
+                if (_context.States == null)
+                {
+                    return NotFound();
+                }
+                var state = await _context.States.FindAsync(id);
 
-            return state;
+                if (state == null)
+                {
+                    return NotFound();
+                }
+
+                return state;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // PUT: api/States/5
@@ -55,30 +71,38 @@ namespace TenderApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutState(int id, State state)
         {
-            if (id != state.StateId)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(state).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!StateExists(id))
+                if (id != state.StateId)
                 {
-                    return NotFound();
+                    return BadRequest();
                 }
-                else
-                {
-                    throw;
-                }
-            }
 
-            return NoContent();
+                _context.Entry(state).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!StateExists(id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+
+                return NoContent();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // POST: api/States
@@ -86,34 +110,50 @@ namespace TenderApi.Controllers
         [HttpPost]
         public async Task<ActionResult<State>> PostState(State state)
         {
-          if (_context.States == null)
-          {
-              return Problem("Entity set 'TenderDbContext.States'  is null.");
-          }
-            _context.States.Add(state);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (_context.States == null)
+                {
+                    return Problem("Entity set 'TenderDbContext.States'  is null.");
+                }
+                _context.States.Add(state);
+                await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetState", new { id = state.StateId }, state);
+                return CreatedAtAction("GetState", new { id = state.StateId }, state);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
         // DELETE: api/States/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteState(int id)
         {
-            if (_context.States == null)
+            try
             {
-                return NotFound();
+                if (_context.States == null)
+                {
+                    return NotFound();
+                }
+                var state = await _context.States.FindAsync(id);
+                if (state == null)
+                {
+                    return NotFound();
+                }
+
+                _context.States.Remove(state);
+                await _context.SaveChangesAsync();
+
+                return NoContent();
             }
-            var state = await _context.States.FindAsync(id);
-            if (state == null)
+            catch (Exception)
             {
-                return NotFound();
+
+                throw;
             }
-
-            _context.States.Remove(state);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
 
         private bool StateExists(int id)

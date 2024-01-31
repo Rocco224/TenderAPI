@@ -64,7 +64,7 @@ namespace TenderAPI
             builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-            // Creazione singleton per dependecy injection
+            // Creazione singleton per dependecy injection --- DA TOGLIEREEEEE
             builder.Services.AddSingleton<Jwt>(provider =>
             {
                 var jwt = new Jwt(builder.Configuration["Jwt:Key"],

@@ -19,7 +19,7 @@ public partial class Practice
 
     public DateTime DateExpire { get; set; }
 
-    public DateTime DateStart { get; set; }
+    public DateTime? DateStart { get; set; }
 
     public string Platform { get; set; } = null!;
 
