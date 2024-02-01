@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "35Yt3qOqKd9Mafq+Cu4zkv25Vbghl4JiqJfuUgW3CfQhRHRfmmB0a85d1N5DIYZNryR4VuzQBWqs9Y6KGLUG8w==",
+  "dgSpecHash": "C+/T6ze9s2xIksiEq2v4vkH0yI6+CbhbkogD3YnMxx6bm4IQpiAZhW4loyr0m9QoJPkC5eec1pViCKHJkAjWmA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Rocco\\source\\repos\\TenderAPI\\TenderAPI.csproj",
+  "projectFilePath": "C:\\Users\\Rocco\\source\\repos\\TenderApi\\TenderAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Rocco\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\Rocco\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

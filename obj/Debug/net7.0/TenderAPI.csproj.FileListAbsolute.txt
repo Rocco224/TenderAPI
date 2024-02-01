@@ -244,7 +244,6 @@ C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.AssemblyInfo.cs
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.csproj.CoreCompileInputs.cache
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.sourcelink.json
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\staticwebassets.build.json
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\staticwebassets.development.json
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\staticwebassets\msbuild.TenderAPI.Microsoft.AspNetCore.StaticWebAssets.props
@@ -259,3 +258,8 @@ C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\refint\TenderAPI.dll
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.pdb
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\TenderAPI.genruntimeconfig.cache
 C:\Users\Rocco\source\repos\TenderAPI\obj\Debug\net7.0\ref\TenderAPI.dll
+C:\Users\Rocco\source\repos\TenderApi\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+C:\Users\Rocco\source\repos\TenderApi\bin\Debug\net7.0\MailKit.dll
+C:\Users\Rocco\source\repos\TenderApi\bin\Debug\net7.0\MimeKit.dll
+C:\Users\Rocco\source\repos\TenderApi\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+C:\Users\Rocco\source\repos\TenderApi\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

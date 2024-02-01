@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -8,6 +7,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using TenderAPI.Authentication;
 using TenderAPI.Contexts;
+using TenderAPI.Services.EmailServices;
 
 namespace TenderAPI
 {
@@ -34,6 +34,8 @@ namespace TenderAPI
 
             builder.Services.AddControllers().AddJsonOptions(
                 options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+
+            builder.Services.AddScoped<IEmailService, EmailService>();
 
             builder.Services.AddDbContext<TenderDbContext>(
                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("TenderDB")));
