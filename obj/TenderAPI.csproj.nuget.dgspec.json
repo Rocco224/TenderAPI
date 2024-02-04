@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Rocco\\source\\repos\\TenderApi\\TenderAPI.csproj": {}
+    "C:\\Users\\Rocco\\source\\repos\\TenderAPI\\TenderAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Rocco\\source\\repos\\TenderApi\\TenderAPI.csproj": {
+    "C:\\Users\\Rocco\\source\\repos\\TenderAPI\\TenderAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Rocco\\source\\repos\\TenderApi\\TenderAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Rocco\\source\\repos\\TenderAPI\\TenderAPI.csproj",
         "projectName": "TenderAPI",
-        "projectPath": "C:\\Users\\Rocco\\source\\repos\\TenderApi\\TenderAPI.csproj",
+        "projectPath": "C:\\Users\\Rocco\\source\\repos\\TenderAPI\\TenderAPI.csproj",
         "packagesPath": "C:\\Users\\Rocco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Rocco\\source\\repos\\TenderApi\\obj\\",
+        "outputPath": "C:\\Users\\Rocco\\source\\repos\\TenderAPI\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -113,7 +113,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
