@@ -66,14 +66,6 @@ namespace TenderAPI
             builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables();
 
-            // Creazione singleton per dependecy injection --- DA TOGLIEREEEEE
-            builder.Services.AddSingleton<Jwt>(provider =>
-            {
-                var jwt = new Jwt(builder.Configuration["Jwt:Key"],
-                                  builder.Configuration["Jwt:Issuer"],
-                                  builder.Configuration["Jwt:Audience"]); return jwt;
-            });
-
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();

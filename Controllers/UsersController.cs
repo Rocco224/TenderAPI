@@ -12,12 +12,12 @@ namespace TenderAPI.Controllers
     public class UsersController : ControllerBase
     {
         private readonly TenderDbContext _context;
-        private readonly Jwt _jwt;
+        private readonly IConfiguration _configuration;
 
-        public UsersController(TenderDbContext context, Jwt jwt)
+        public UsersController(TenderDbContext context, IConfiguration configuration)
         {
             _context = context;
-            _jwt = jwt;
+            _configuration = configuration;
         }
 
         // GET: api/Users
@@ -157,7 +157,7 @@ namespace TenderAPI.Controllers
 
                 if (user.Password == dbUser.Password)
                 {
-                    string token = JwtHandler.GenerateJwtToken(user, _jwt.SecretKey, _jwt.Issuer, _jwt.Audience);
+                    string token = JwtHandler.GenerateJwtToken(user, _configuration);
 
                     return Ok(new { Token = token, Message = "Login riuscito." });
                 }

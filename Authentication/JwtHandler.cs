@@ -9,10 +9,14 @@ namespace TenderAPI.Authentication
     public class JwtHandler
     {
         // Creazione del token
-        public static string GenerateJwtToken(User user, string secretKey, string issuer, string audience)
+        public static string GenerateJwtToken(User user, IConfiguration configuration)
         {
             try
             {
+                var secretKey = configuration["Jwt:Key"];
+                var issuer = configuration["Jwt:Issuer"];
+                var audience = configuration["Jwt:Audience"];
+
                 var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey));
                 var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
 
