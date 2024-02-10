@@ -8,6 +8,7 @@ using System.Text.Json.Serialization;
 using TenderAPI.Authentication;
 using TenderAPI.Contexts;
 using TenderAPI.Services.EmailServices;
+using Hangfire;
 
 namespace TenderAPI
 {
@@ -20,6 +21,10 @@ namespace TenderAPI
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            // Aggiungi i servizi di Hangfire
+            builder.Services.AddHangfire(configuration => configuration
+                .UseSqlServerStorage(builder.Configuration.GetConnectionString("TenderDB")));
 
             builder.Services.AddCors(options =>
             {
@@ -69,7 +74,7 @@ namespace TenderAPI
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-
+            
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -87,8 +92,15 @@ namespace TenderAPI
             IConfiguration configuration = app.Configuration;
             IWebHostEnvironment environment = app.Environment;
 
-            app.MapControllers();
+            // Esegui il job Hangfire
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
 
+            // Pianificazione email ogni giorno alle 9:00
+            RecurringJob.AddOrUpdate<IEmailService>(x => x.SendEmail(new Models.EmailDto()), "45 8 * * *", TimeZoneInfo.Local); // sintassi cron: minuto - ora - giorno del mese - mese - giorno della settimana
+
+            app.MapControllers();
+            
             app.Run();
         }
     }

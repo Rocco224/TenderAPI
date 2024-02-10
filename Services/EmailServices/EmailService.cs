@@ -13,7 +13,7 @@ namespace TenderAPI.Services.EmailServices
         {
             _configuration = configuration;
         }
-        public async void SendEmail(EmailDto request)
+        public async Task SendEmail(EmailDto request)
         {
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUsername").Value));
@@ -22,14 +22,14 @@ namespace TenderAPI.Services.EmailServices
             email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
 
             using var smtp = new SmtpClient();
-            smtp.Connect(_configuration.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
+            await smtp.ConnectAsync(_configuration.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
 
             var emailUsername = _configuration.GetSection("EmailUsername").Value;
             var emailPassword = _configuration.GetSection("EmailPassword").Value;
 
-            smtp.Authenticate(emailUsername, emailPassword);
+            await smtp.AuthenticateAsync(emailUsername, emailPassword);
             await smtp.SendAsync(email);
-            smtp.Disconnect(true);
+            await smtp.DisconnectAsync(true);
         }
     }
 }  

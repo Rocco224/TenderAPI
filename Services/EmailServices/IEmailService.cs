@@ -4,6 +4,6 @@ namespace TenderAPI.Services.EmailServices
 {
     public interface IEmailService
     {
-        void SendEmail(EmailDto request);
+        Task SendEmail(EmailDto request);
     }
 }
