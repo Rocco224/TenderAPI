@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TenderAPI.Contexts;
+using TenderAPI.Data;
 using TenderAPI.Models;
 
 namespace TenderApi.Controllers
@@ -33,7 +33,8 @@ namespace TenderApi.Controllers
                     return NotFound();
                 }
                 // se chiamata arriva da archivio clienti: no pratiche !!!
-                return await _context.Customers.ToListAsync();
+
+                return await _context.Customers.Include(customer => customer.Practices).ToListAsync();
             }
             catch (Exception)
             {

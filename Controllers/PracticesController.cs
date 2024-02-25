@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TenderAPI.Contexts;
+using TenderAPI.Data;
 using TenderAPI.Models;
 
 namespace TenderApi.Controllers
@@ -32,8 +32,10 @@ namespace TenderApi.Controllers
                     return NotFound();
                 }
 
-                return await _context.Practices.ToListAsync();
-               
+                return await _context.Practices.Include(practice => practice.Customer)
+                                               .Include(practice => practice.ProcedureType)
+                                               .Include(practice => practice.State)
+                                               .ToListAsync();
             }
             catch (Exception)
             {
@@ -148,6 +150,26 @@ namespace TenderApi.Controllers
                 _context.Practices.Add(practice);
                 try
                 {
+                    // Assegnazione cliente, tipo procedura e stato delle pratiche
+                    var customer = await _context.Customers.FindAsync(practice.CustomerId);
+                    var procedureType = await _context.ProceduresTypes.FindAsync(practice.ProcedureTypeId);
+                    var state = await _context.States.FindAsync(practice.StateId);
+
+                    if (customer == null)
+                    {
+                        return Problem("Customer does not exist.");
+                    } else if (procedureType == null)
+                    {
+                        return Problem("Procedure type does not exist.");
+                    } else if (state == null)
+                    {
+                        return Problem("State does not exist.");
+                    }
+
+                    practice.Customer = customer;
+                    practice.ProcedureType = procedureType;
+                    practice.State = state;
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateException)

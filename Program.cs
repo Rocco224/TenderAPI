@@ -5,8 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System.Text.Json.Serialization;
-//using TenderAPI.Authentication;
-//using TenderAPI.Contexts;
+using TenderAPI.Authentication;
+using TenderAPI.Data;
 using TenderAPI.Services.EmailServices;
 using Hangfire;
 
@@ -42,8 +42,8 @@ namespace TenderAPI
 
             builder.Services.AddScoped<IEmailService, EmailService>();
 
-           // builder.Services.AddDbContext<TenderDbContext>(
-            //    options => options.UseSqlServer(builder.Configuration.GetConnectionString("TenderDB")));
+            builder.Services.AddDbContext<TenderDbContext>(
+                options => options.UseSqlServer(builder.Configuration.GetConnectionString("TenderDB")));
 
             // Aggiunta autenticazione JWT
             builder.Services.AddAuthentication(options =>
@@ -97,7 +97,7 @@ namespace TenderAPI
             app.UseHangfireDashboard();
 
             // Pianificazione email ogni giorno alle 9:00
-            RecurringJob.AddOrUpdate<IEmailService>(x => x.SendEmail(new Models.EmailDto()), "0 9 * * *", TimeZoneInfo.Local); // sintassi cron: minuto - ora - giorno del mese - mese - giorno della settimana
+            RecurringJob.AddOrUpdate<IEmailService>(x => x.SendEmail(new Models.EmailDto()), "45 8 * * *", TimeZoneInfo.Local); // sintassi cron: minuto - ora - giorno del mese - mese - giorno della settimana
 
             app.MapControllers();
             

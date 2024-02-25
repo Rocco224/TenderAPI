@@ -11,7 +11,7 @@ public partial class Practice
 
     public int ProcedureTypeId { get; set; }
 
-    public int StateId { get; set; }
+    public int? StateId { get; set; }
 
     public string Authority { get; set; } = null!;
 

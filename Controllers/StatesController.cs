@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using TenderAPI.Contexts;
+using TenderAPI.Data;
 using TenderAPI.Models;
 
 namespace TenderApi.Controllers
@@ -31,7 +31,7 @@ namespace TenderApi.Controllers
                 {
                     return NotFound();
                 }
-                return await _context.States.ToListAsync();
+                return await _context.States.Include(customer => customer.Practices).ToListAsync();
             }
             catch (Exception)
             {
