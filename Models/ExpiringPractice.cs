@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TenderAPI.Models;
 
-public partial class Practice
+public partial class ExpiringPractice
 {
     public int PracticeId { get; set; }
 
@@ -33,9 +33,7 @@ public partial class Practice
 
     public string Criteria { get; set; } = null!;
 
-    public virtual Customer Customer { get; set; } = null!;
+    public string CustomerName { get; set; } = null!;
 
-    public virtual ProceduresType ProcedureType { get; set; } = null!;
-
-    public virtual State State { get; set; } = null!;
+    public string State { get; set; } = null!;
 }

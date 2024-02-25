@@ -31,7 +31,9 @@ namespace TenderApi.Controllers
                 {
                     return NotFound();
                 }
+
                 return await _context.Practices.ToListAsync();
+               
             }
             catch (Exception)
             {
@@ -39,6 +41,33 @@ namespace TenderApi.Controllers
                 throw;
             }
         }
+
+        [HttpGet("ExpiringPractices")]
+        public async Task<ActionResult<IEnumerable<ExpiringPractice>>> GetExpiringPractices()
+        {
+            try
+            {
+                if (_context.Practices == null)
+                {
+                    return NotFound();
+                }
+
+                var expiringPractices = await _context.ExpiringPractices.ToListAsync();
+
+                if(expiringPractices.Count == 0)
+                {
+                    return NotFound();
+                }
+
+                return expiringPractices;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
         // GET: api/Practices/5
         [HttpGet("{id}")]

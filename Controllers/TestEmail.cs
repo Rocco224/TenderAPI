@@ -28,7 +28,6 @@ namespace TenderAPI.Controllers
 
                 throw;
             }
-
         }
 
     }

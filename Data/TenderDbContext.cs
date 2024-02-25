@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using TenderAPI.Models;
 
-namespace TenderAPI.Contexts;
+namespace TenderAPI.Data;
 
 public partial class TenderDbContext : DbContext
 {
@@ -16,7 +16,10 @@ public partial class TenderDbContext : DbContext
     {
     }
 
+
     public virtual DbSet<Customer> Customers { get; set; }
+
+    public virtual DbSet<ExpiringPractice> ExpiringPractices { get; set; }
 
     public virtual DbSet<Practice> Practices { get; set; }
 
@@ -24,10 +27,12 @@ public partial class TenderDbContext : DbContext
 
     public virtual DbSet<State> States { get; set; }
 
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        => optionsBuilder.UseSqlServer("Name=ConnectionStrings:TenderDB");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Data Source=DESKTOP-I3JGH2T\\SQLEXPRESS;Initial Catalog=TenderDB;Integrated Security=True;TrustServerCertificate=True;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -40,16 +45,71 @@ public partial class TenderDbContext : DbContext
                 .HasColumnName("description");
         });
 
+        modelBuilder.Entity<ExpiringPractice>(entity =>
+        {
+            entity
+                .HasNoKey()
+                .ToView("ExpiringPractices");
+
+            entity.Property(e => e.Amount).HasColumnName("amount");
+            entity.Property(e => e.Authority)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("authority");
+            entity.Property(e => e.Criteria)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("criteria");
+            entity.Property(e => e.CustomerId).HasColumnName("customer_id");
+            entity.Property(e => e.CustomerName)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("customer_name");
+            entity.Property(e => e.DateExpire)
+                .HasColumnType("date")
+                .HasColumnName("date_expire");
+            entity.Property(e => e.DateStart)
+                .HasColumnType("date")
+                .HasColumnName("date_start");
+            entity.Property(e => e.Note)
+                .HasMaxLength(300)
+                .IsUnicode(false)
+                .HasColumnName("note");
+            entity.Property(e => e.Object)
+                .HasMaxLength(500)
+                .IsUnicode(false)
+                .HasColumnName("object");
+            entity.Property(e => e.Platform)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("platform");
+            entity.Property(e => e.PracticeId).HasColumnName("practice_id");
+            entity.Property(e => e.PrevalentCategory)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("prevalent_category");
+            entity.Property(e => e.ProcedureTypeId).HasColumnName("procedure_type_id");
+            entity.Property(e => e.ProcurementCode)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("procurement_code");
+            entity.Property(e => e.State)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("state");
+            entity.Property(e => e.StateId).HasColumnName("state_id");
+        });
+
         modelBuilder.Entity<Practice>(entity =>
         {
             entity.Property(e => e.PracticeId).HasColumnName("practice_id");
             entity.Property(e => e.Amount).HasColumnName("amount");
             entity.Property(e => e.Authority)
-                .HasMaxLength(20)
+                .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("authority");
             entity.Property(e => e.Criteria)
-                .HasMaxLength(30)
+                .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasColumnName("criteria");
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
@@ -60,11 +120,11 @@ public partial class TenderDbContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("date_start");
             entity.Property(e => e.Note)
-                .HasMaxLength(200)
+                .HasMaxLength(300)
                 .IsUnicode(false)
                 .HasColumnName("note");
             entity.Property(e => e.Object)
-                .HasMaxLength(150)
+                .HasMaxLength(500)
                 .IsUnicode(false)
                 .HasColumnName("object");
             entity.Property(e => e.Platform)
@@ -122,8 +182,6 @@ public partial class TenderDbContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.ToTable("User");
-
             entity.Property(e => e.Email)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -134,7 +192,7 @@ public partial class TenderDbContext : DbContext
                 .HasMaxLength(100)
                 .IsUnicode(false);
             entity.Property(e => e.Salt)
-                .HasMaxLength(20)
+                .HasMaxLength(40)
                 .IsUnicode(false);
             entity.Property(e => e.Surname)
                 .HasMaxLength(20)
