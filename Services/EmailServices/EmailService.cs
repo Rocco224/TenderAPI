@@ -3,18 +3,26 @@ using MimeKit.Text;
 using MimeKit;
 using TenderAPI.Models;
 using MailKit.Net.Smtp;
+using TenderAPI.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace TenderAPI.Services.EmailServices
 {
     public class EmailService : IEmailService
     {
         private readonly IConfiguration _configuration;
-        public EmailService(IConfiguration configuration) 
+        private readonly TenderDbContext _context;
+
+        public EmailService(IConfiguration configuration, TenderDbContext context) 
         {
             _configuration = configuration;
+            _context = context;
         }
+
         public async Task SendEmail(EmailDto request)
         {
+            var expiringPractices = await _context.ExpiringPractices.ToListAsync();
+
             var email = new MimeMessage();
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(request.To));
