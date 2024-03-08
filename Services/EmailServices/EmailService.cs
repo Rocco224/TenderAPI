@@ -27,7 +27,9 @@ namespace TenderAPI.Services.EmailServices
             email.From.Add(MailboxAddress.Parse(_configuration.GetSection("EmailUsername").Value));
             email.To.Add(MailboxAddress.Parse(request.To));
             email.Subject = request.Subject;
+            // pratiche in scadenza
             email.Body = new TextPart(TextFormat.Html) { Text = request.Body };
+            // la pratica {{objecy}} del cliente {{customer}} e' in scadenza giorno {{date expire}}
 
             using var smtp = new SmtpClient();
             await smtp.ConnectAsync(_configuration.GetSection("EmailHost").Value, 587, SecureSocketOptions.StartTls);
