@@ -16,6 +16,7 @@ public partial class TenderDbContext : DbContext
     {
     }
 
+    public virtual DbSet<Attachment> Attachments { get; set; }
 
     public virtual DbSet<Customer> Customers { get; set; }
 
@@ -27,7 +28,6 @@ public partial class TenderDbContext : DbContext
 
     public virtual DbSet<State> States { get; set; }
 
-
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -36,6 +36,21 @@ public partial class TenderDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Attachment>(entity =>
+        {
+            entity.Property(e => e.AttachmentId).HasColumnName("attachment_id");
+            entity.Property(e => e.Path)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("path");
+            entity.Property(e => e.PracticeId).HasColumnName("practice_id");
+
+            entity.HasOne(d => d.Practice).WithMany(p => p.Attachments)
+                .HasForeignKey(d => d.PracticeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Attachments_Practices");
+        });
+
         modelBuilder.Entity<Customer>(entity =>
         {
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");

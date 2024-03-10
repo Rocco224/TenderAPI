@@ -281,3 +281,6 @@ C:\Users\Rocco\source\repos\TenderApi\obj\Debug\net7.0\refint\TenderAPI.dll
 C:\Users\Rocco\source\repos\TenderApi\obj\Debug\net7.0\TenderAPI.pdb
 C:\Users\Rocco\source\repos\TenderApi\obj\Debug\net7.0\TenderAPI.genruntimeconfig.cache
 C:\Users\Rocco\source\repos\TenderApi\obj\Debug\net7.0\ref\TenderAPI.dll
+C:\Users\Rocco\source\repos\TenderAPI\bin\Debug\net7.0\System.Formats.Asn1.dll
+C:\Users\Rocco\source\repos\TenderAPI\bin\Debug\net7.0\System.Text.Encoding.CodePages.dll
+C:\Users\Rocco\source\repos\TenderAPI\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Text.Encoding.CodePages.dll

@@ -11,7 +11,7 @@ public partial class Practice
 
     public int ProcedureTypeId { get; set; }
 
-    public int? StateId { get; set; }
+    public int StateId { get; set; }
 
     public string Authority { get; set; } = null!;
 
@@ -32,6 +32,8 @@ public partial class Practice
     public string Note { get; set; } = null!;
 
     public string Criteria { get; set; } = null!;
+
+    public virtual ICollection<Attachment> Attachments { get; set; } = new List<Attachment>();
 
     public virtual Customer Customer { get; set; } = null!;
 
